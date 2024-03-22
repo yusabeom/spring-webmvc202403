@@ -9,3 +9,12 @@
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
 	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
 ```
+- application.properties 파일에 추가
+```
+    # server port change
+    server.port=8181
+
+    # jsp view resolver setting
+    spring.mvc.view.prefix=/WEB-INF/views/
+    spring.mvc.view.suffix=.jsp
+```
