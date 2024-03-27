@@ -1,5 +1,6 @@
 package com.spring.mvc.chap04.repository;
 
+import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Grade;
 import com.spring.mvc.chap04.entity.Score;
 import lombok.RequiredArgsConstructor;
@@ -98,4 +99,18 @@ public class ScoreRepositoryImpl implements ScoreRepository{
 
         return score;
     }
+
+    @Override
+    public void update(Score changeScore) {
+        String sql = "UPDATE tbl_score SET " +
+                "kor=?, eng=?, math=?, total=?, average=?, grade=? " +
+                "WHERE stu_num=?";
+
+
+        jdbcTemplate.update(sql, changeScore.getKor(),changeScore.getEng(),
+                changeScore.getMath(),changeScore.getTotal(),changeScore.getAverage(),
+                changeScore.getGrade().toString(), changeScore.getStuNum());
+
+    }
+
 }
