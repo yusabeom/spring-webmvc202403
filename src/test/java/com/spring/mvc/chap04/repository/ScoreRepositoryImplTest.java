@@ -35,6 +35,7 @@ class ScoreRepositoryImplTest {
         // given
 
         // when
+        String sort = null;
         List<Score> scoreList = repository.findAll(sort);
         System.out.println("scoreList = " + scoreList);
 
