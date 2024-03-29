@@ -47,6 +47,11 @@
         SELECT * FROM tbl_board
         WHERE board_no = #{boardNo}
     </select>
+    
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board
+    </select>
 
 </mapper>
 
