@@ -50,7 +50,7 @@ class ReplyMapperTest {
         // given
         int boardNo = 77;
         // when
-        List<Reply> rList = replyMapper.findAll(boardNo);
+        List<Reply> rList = replyMapper.findAll(boardNo, page);
         // then
         assertEquals(13, rList.size());
     }
@@ -66,7 +66,7 @@ class ReplyMapperTest {
         Reply delReply = replyMapper.findOne(replyNo);
         // then
         assertNull(delReply);
-        assertEquals(12, replyMapper.findAll(boardNo).size());
+        assertEquals(12, replyMapper.findAll(boardNo, page).size());
     }
 
     @Test
