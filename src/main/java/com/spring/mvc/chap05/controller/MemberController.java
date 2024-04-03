@@ -1,11 +1,15 @@
 package com.spring.mvc.chap05.controller;
 
+import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
+import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/members")
@@ -44,6 +48,32 @@ public class MemberController {
 
         memberService.join(dto);
         return "redirect:/board/list";
+    }
+
+    // 로그인 양식 화면 요청 처리
+    @GetMapping("/sign-in")
+    public void signIn() {
+        System.out.println("/members/sign-in: GET!!");
+    }
+
+    // 로그인 검증 요청
+    @PostMapping("/sign-in")
+    public String signIn(LoginRequestDTO dto, RedirectAttributes ra) {
+        System.out.println("/members/sign-in: POST!!");
+        System.out.println("dto = " + dto);
+
+        LoginResult result = memberService.authenticate(dto);
+        System.out.println("result = " + result);
+
+        // Model에 담긴 데이터는 redirect 시 jsp로 전달되지 못한다.
+        // 수명이 짧음 (한번의 요청과 응답 사이에서만 유효)
+
+        ra.addFlashAttribute("result", result);
+
+        if (result == LoginResult.SUCCESS) { // 로그인 성공 시
+            return "redirect:/board/list";
+        }
+        return "redirect:/members/sign-in"; // 로그인 실패 시
     }
 
 }
