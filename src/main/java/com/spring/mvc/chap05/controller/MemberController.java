@@ -5,6 +5,7 @@ import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,9 @@ public class MemberController {
 
     // 로그인 검증 요청
     @PostMapping("/sign-in")
-    public String signIn(LoginRequestDTO dto, RedirectAttributes ra, HttpServletResponse response) {
+    public String signIn(LoginRequestDTO dto, RedirectAttributes ra,
+                         HttpServletResponse response,
+                         HttpServletRequest request) {
         System.out.println("/members/sign-in: POST!!");
         System.out.println("dto = " + dto);
 
@@ -75,7 +78,10 @@ public class MemberController {
         if (result == LoginResult.SUCCESS) { // 로그인 성공 시
 
             // 로그인을 했다는 정보를 계속 유지하기 위한 수단으로 쿠키를 사용하자.
-            makeLoginCookie(dto, response);
+//            makeLoginCookie(dto, response);
+
+            // 세션으로 로그인 유지
+            memberService.maintainLoginState(request.getSession(), dto.getAccount());
 
             return "redirect:/board/list";
         }
