@@ -78,7 +78,8 @@ public class MemberService {
                     .sessionId(session.getId())
                     .limitTime(LocalDateTime.now().plusDays(90))
                     .account(dto.getAccount())
-                    .build();
+                    .build());
+
         }
 
         System.out.println(dto.getAccount()+"님 로그인 성공!");
