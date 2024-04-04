@@ -67,7 +67,7 @@ public class MemberController {
                          HttpServletRequest request) {
         log.info("/members/sign-in: POST!!, dto: {}", dto);
 
-        LoginResult result = memberService.authenticate(dto);
+        LoginResult result = memberService.authenticate(dto, request.getSession(), response);
         log.info("result: {}", result);
 
         // Model에 담긴 데이터는 redirect 시 jsp로 전달되지 못한다.
