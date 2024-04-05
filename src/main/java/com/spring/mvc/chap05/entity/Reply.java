@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Setter @Getter @ToString
+@Getter @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,11 +12,15 @@ import java.time.LocalDateTime;
 public class Reply {
 
     private int replyNo;
+    @Setter
     private String replyText;
+    @Setter
     private String replyWriter;
     private LocalDateTime replyDate;
     private int boardNo;
     private LocalDateTime updateDate;
+    @Setter
+    private String account;
 
 
 }
