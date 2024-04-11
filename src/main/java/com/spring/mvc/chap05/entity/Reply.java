@@ -23,6 +23,7 @@ public class Reply {
     private String account;
 
     private String profileImage;
+    private String loginMethod;
 
 
 }

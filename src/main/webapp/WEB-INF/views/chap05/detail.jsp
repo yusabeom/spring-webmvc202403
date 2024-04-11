@@ -197,7 +197,14 @@
                                             <img src="/assets/img/anonymous.jpg" alt="프사">
                                         </c:if>
                                         <c:if test="${login.profile != null}">
-                                            <img src="/display${login.profile}" alt="프사">
+                                            <c:choose>
+                                                <c:when test="${login.loginMethod == COMMON}">
+                                                    <img src="/display${login.profile}" alt="프사">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${login.profile}" alt="프사">
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:if>
                                     </div>
 
@@ -334,7 +341,7 @@
                 
                 for (let reply of replies) {
 
-                    const {rno, writer, text, regDate, updateDate, account, profile} = reply;
+                    const {rno, writer, text, regDate, updateDate, account, profile, loginMethod} = reply;
 
                     tag += `
                     <div id='replyContent' class='card-body' data-replyId='\${rno}'>
@@ -342,8 +349,20 @@
                             <span class='col-md-8'>
                         `;
 
-                    tag += (profile ? `<img class='reply-profile' src='/local\${profile}' alt='{profile iamge}'>`
-                                    :`<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='{profile iamge}'>`)  ;
+                    let profileTag = '';
+                    if (profile) {
+                        if (loginMethod.trim() === 'COMMON') {
+                            profileTag = `<img class='reply-profile' src='/local\${profile}' alt='profile image' >`;
+                        } else {
+                            profileTag = `<img class='reply-profile' src='\${profile}' alt='profile image' >`;
+                        }
+                    } else {
+                        profileTag = `<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='anonymous image' >`;
+                    }
+                    tag += profileTag;
+
+                    // tag += (profile ? `<img class='reply-profile' src='/local\${profile}' alt='{profile iamge}'>`
+                    //                 :`<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='{profile iamge}'>`)  ;
                     
                     tag += `<b>\${writer}</b>
                         </span>
